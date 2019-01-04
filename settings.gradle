@@ -1,0 +1,19 @@
+rootProject.name = 'hmd'
+
+include ':geo-admin'
+include ':geo-user'
+include ':dockyard-admin'
+include ':dockyard-user'
+include ':facility-admin'
+include ':facility-user'
+include ':hmd-html'
+include ':hmd-doc'
+
+project(':geo-admin').projectDir = "$rootDir/geo-admin" as File
+project(':geo-user').projectDir = "$rootDir/geo-user" as File
+project(':dockyard-admin').projectDir = "$rootDir/dockyard-admin" as File
+project(':dockyard-user').projectDir = "$rootDir/dockyard-user" as File
+project(':facility-admin').projectDir = "$rootDir/facility-admin" as File
+project(':facility-user').projectDir = "$rootDir/facility-user" as File
+project(':hmd-html').projectDir = "$rootDir/hmd-html" as File
+project(':hmd-doc').projectDir = "$rootDir/hmd-doc" as File
