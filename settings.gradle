@@ -6,9 +6,9 @@ include ':dockyard-admin'
 include ':dockyard-user'
 include ':facility-admin'
 include ':facility-user'
-include ':hmd-common'
-include ':hmd-html'
-include ':hmd-doc'
+include ':common'
+include ':html'
+include ':doc'
 
 project(':gis-admin').projectDir = "$rootDir/gis-admin" as File
 project(':gis-user').projectDir = "$rootDir/gis-user" as File
@@ -16,6 +16,6 @@ project(':dockyard-admin').projectDir = "$rootDir/dockyard-admin" as File
 project(':dockyard-user').projectDir = "$rootDir/dockyard-user" as File
 project(':facility-admin').projectDir = "$rootDir/facility-admin" as File
 project(':facility-user').projectDir = "$rootDir/facility-user" as File
-project(':hmd-common').projectDir = "$rootDir/hmd-common" as File
-project(':hmd-html').projectDir = "$rootDir/hmd-html" as File
-project(':hmd-doc').projectDir = "$rootDir/hmd-doc" as File
+project(':common').projectDir = "$rootDir/common" as File
+project(':html').projectDir = "$rootDir/html" as File
+project(':doc').projectDir = "$rootDir/doc" as File
