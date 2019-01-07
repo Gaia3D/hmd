@@ -12,6 +12,7 @@
 	ignoreFailures = true
  }
  => 테스트 실패 시 warning만 뜨게 바뀜 
+ 	gradle refresh 후에 빌드
  
 4 git 사용법
  - commit 시 주석 상세히 달기

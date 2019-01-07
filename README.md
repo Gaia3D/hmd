@@ -1,4 +1,4 @@
-#hmd
+# hmd
 
 ## Development Environment
 - Spring
@@ -15,6 +15,6 @@
 - dockyard-user : 블록 및 이동체 조회
 - facility-admin : 시설물 관리
 - facility-user : 시설물 조회
-- hmd-common : 암호화, 통계모듈 등 공통 util 기능
-- hmd-doc : database schema, 개발 문서
-- hmd-html : 프론트엔드 개발 환경
+- common : 암호화, 통계모듈 등 공통 util 기능
+- doc : database schema, 개발 문서
+- html : 프론트엔드 개발 환경
