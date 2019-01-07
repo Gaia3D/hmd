@@ -1,7 +1,7 @@
 rootProject.name = 'hmd'
 
-include ':geo-admin'
-include ':geo-user'
+include ':gis-admin'
+include ':gis-user'
 include ':dockyard-admin'
 include ':dockyard-user'
 include ':facility-admin'
@@ -10,8 +10,8 @@ include ':hmd-common'
 include ':hmd-html'
 include ':hmd-doc'
 
-project(':geo-admin').projectDir = "$rootDir/geo-admin" as File
-project(':geo-user').projectDir = "$rootDir/geo-user" as File
+project(':gis-admin').projectDir = "$rootDir/gis-admin" as File
+project(':gis-user').projectDir = "$rootDir/gis-user" as File
 project(':dockyard-admin').projectDir = "$rootDir/dockyard-admin" as File
 project(':dockyard-user').projectDir = "$rootDir/dockyard-user" as File
 project(':facility-admin').projectDir = "$rootDir/facility-admin" as File
