@@ -164,9 +164,9 @@
 
     var server = app.listen(argv.port, argv.public ? undefined : 'localhost', function() {
         if (argv.public) {
-            console.log('LiveDroneMap server running publicly.  Connect to http://localhost:%d/', server.address().port);
+            console.log('hmd Project server running publicly.  Connect to http://localhost:%d/', server.address().port);
         } else {
-            console.log('LiveDroneMap development server running locally.  Connect to http://localhost:%d/', server.address().port);
+            console.log('hmd Project development server running locally.  Connect to http://localhost:%d/', server.address().port);
         }
     });
 
@@ -185,7 +185,7 @@
     });
 
     server.on('close', function() {
-        console.log('LiveDroneMap development server stopped.');
+        console.log('hmd Project development server stopped.');
     });
 
     var isFirstSig = true;
