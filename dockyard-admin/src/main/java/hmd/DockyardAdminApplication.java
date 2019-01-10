@@ -1,13 +1,13 @@
-package gaia3d;
+package hmd;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class FacilityAdminApplication {
+public class DockyardAdminApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(FacilityAdminApplication.class, args);
+		SpringApplication.run(DockyardAdminApplication.class, args);
 	}
 
 }

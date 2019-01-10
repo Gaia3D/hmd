@@ -1,13 +1,13 @@
-package gaia3d;
+package hmd;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class HmdCommonApplication {
+public class FacilityUserApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(HmdCommonApplication.class, args);
+		SpringApplication.run(FacilityUserApplication.class, args);
 	}
 
 }

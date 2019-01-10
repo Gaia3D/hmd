@@ -1,4 +1,4 @@
-package gaia3d.controller;
+package hmd.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
