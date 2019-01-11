@@ -1,4 +1,4 @@
-package gaia3d;
+package hmd;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
