@@ -1,13 +1,13 @@
-package gaia3d;
+package hmd;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class GeoUserApplication {
+public class GisUserApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(GeoUserApplication.class, args);
+		SpringApplication.run(GisUserApplication.class, args);
 	}
 
 }
