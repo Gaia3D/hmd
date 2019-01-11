@@ -1,4 +1,4 @@
-package gaia3d;
+package hmd;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,7 +7,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class GeoUserApplicationTests {
+public class DockyardUserApplicationTests {
 
 	@Test
 	public void contextLoads() {
