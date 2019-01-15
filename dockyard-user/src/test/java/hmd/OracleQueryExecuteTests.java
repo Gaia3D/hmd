@@ -9,7 +9,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import hmd.domain.Block;
 import hmd.service.RefQueryService;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class OracleQueryExecuteTests {
@@ -21,13 +23,13 @@ public class OracleQueryExecuteTests {
 	@Description("블록 정보 조회")
 	public void select_02() {
 		Block block = refQueryService.select_02(null);
-		System.out.println(block);
+		log.info("{}", block);
 	}
 
 	@Test
 	@Description("진행 정보 조회")
 	public void select_02_1() {
-		System.out.println("test");
+		log.info("test");
 	}
 }
 
