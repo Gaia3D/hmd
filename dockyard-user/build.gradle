@@ -1,6 +1,6 @@
 buildscript {
 	ext {
-		springBootVersion = '2.1.1.RELEASE'
+		springBootVersion = '2.1.2.RELEASE'
         lombokVersion = '1.18.4'
 	}
 	repositories {
@@ -17,12 +17,20 @@ apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'war'
 
-group = 'hmd'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = 1.8
+war {
+	baseName = 'dockyard-user'
+	version = '0.0.1-SNAPSHOT'
+}
+
+compileJava {
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+}
+compileJava.options.encoding = 'UTF-8'
 
 repositories {
 	mavenCentral()
+	maven { url "https://code.lds.org/nexus/content/groups/main-repo"}
 }
 
 configurations {
@@ -34,18 +42,19 @@ test {
 }
 
 dependencies {
-	compile('org.springframework.boot:spring-boot-starter-web')
-	//compile('org.mybatis.spring.boot:mybatis-spring-boot-starter:1.3.2')
-	//compile('com.zaxxer:HikariCP')
-	compile('org.springframework.boot:spring-boot-starter-thymeleaf')
+	implementation('org.springframework.boot:spring-boot-starter-web')
+	implementation('org.mybatis.spring.boot:mybatis-spring-boot-starter:1.3.2')
+	implementation('com.oracle:ojdbc6:11.2.0.3')
+	//implementation('com.zaxxer:HikariCP')
+	implementation('org.springframework.boot:spring-boot-starter-thymeleaf')
 
-	runtime('org.springframework.boot:spring-boot-devtools')
-	//runtime('org.postgresql:postgresql')
+	runtimeOnly('org.springframework.boot:spring-boot-devtools')
+	//runtimeOnly('org.postgresql:postgresql')
 
-	annotationProcessor("org.projectlombok:lombok:$lombokVersion")
-	compileOnly("org.projectlombok:lombok:$lombokVersion")
+    annotationProcessor("org.projectlombok:lombok:$lombokVersion")
+    compileOnly("org.projectlombok:lombok:$lombokVersion")
 
-	testCompile('org.springframework.boot:spring-boot-starter-test')
+	testImplementation('org.springframework.boot:spring-boot-starter-test')
 
 	providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
 }
