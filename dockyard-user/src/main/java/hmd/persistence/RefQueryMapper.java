@@ -1,5 +1,7 @@
 package hmd.persistence;
 
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 import hmd.domain.Block;
@@ -11,5 +13,5 @@ public interface RefQueryMapper {
 	 * @param test
 	 * @return
 	 */
-	Block select_02(Block block);
+	List<Block> select_02(Block block);
 }

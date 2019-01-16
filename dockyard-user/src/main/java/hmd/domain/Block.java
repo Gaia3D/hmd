@@ -8,6 +8,9 @@ import lombok.ToString;
 @Setter
 @ToString
 public class Block {
-	private String ship_no;
-
+	private String shipNo;
+	private String mfgInd;
+	private String tranMfgInd;
+	private String areagrp;
+	private String plnwrkdte;
 }
