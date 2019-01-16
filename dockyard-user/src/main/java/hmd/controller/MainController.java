@@ -13,7 +13,7 @@ public class MainController {
 
 	@GetMapping("/dock")
 	public String User() {
-		log.info(">>>>> http://localhost:8090/dock");
+		log.info(">>>>> /dock");
 		return "index";
 	}
 }
