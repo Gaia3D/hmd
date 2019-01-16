@@ -83,21 +83,6 @@ function toggleLayer(obj){
 	mapLayer.setVisible(updateLayers.length !== 0);
 }
 
-
-////// 추후 분리
-function getLayerById(layerId){
-	var layers = map.getLayers().getArray();
-	var layer = null;
-
-	for(var i in layers){
-		if(layers[i].get('id') === layerId){
-			layer = layers[i];
-			break;
-		}
-	}
-	return layer;
-}
-
 /*
 function LayerControll(viewer) {
     var imageryLayers = viewer.imageryLayers;
