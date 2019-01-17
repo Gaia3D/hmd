@@ -29,8 +29,8 @@ public class OracleQueryExecuteTests {
 		param.setTranMfgInd("8");
 		param.setAreagrp("A100");
 		param.setPlnwrkdte("20181224");
-		List<Block> block = refQueryService.select_02(param);
-		log.info("{}", block);
+		List<Block> results = refQueryService.select_02(param);
+		results.forEach(block -> log.info("{}", block));
 	}
 
 	@Test
