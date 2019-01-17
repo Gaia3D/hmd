@@ -52,6 +52,8 @@ var defaultMapLayer = [
 	})
 ];
 
+proj4.defs('EPSG:5186', '+proj=tmerc +lat_0=38 +lon_0=127 +k=1 +x_0=200000 +y_0=600000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs');
+
 var proj = new ol.proj.Projection({
     code : 'EPSG:5186',
     units : 'm',
@@ -78,11 +80,13 @@ var map = new ol.Map({
 addImagePoint('block_layer');
 
 function addImagePoint(layerid) {
-	var coord = [129.396686409664, 35.501695934426];
+	var coord = [129.400218331128, 35.5072031799572];
+	var transCoord = ol.proj.transform(coord, "EPSG:4326", map.getView().getProjection());
 	
 	var feature = new ol.Feature({
 		//geometry: new ol.geom.Point([129.396686409664, 35.501695934426])
-		geometry: new ol.geom.Point([ 417767, 325502 ])
+		//geometry: new ol.geom.Point([ 417767, 325502 ])
+		geometry: new ol.geom.Point(transCoord)
 	});
 	
 	var style = new ol.style.Style({
