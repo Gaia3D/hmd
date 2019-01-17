@@ -1,0 +1,17 @@
+
+gis-admin
+
+gis-user
+
+dockyard-admin
+
+dockyard-user
+	1. mapInit.js: 맵 초기화 관련 소스
+	2. mapUtil.js: 맵 관련 공통 함수 정의
+	3. uiControll.js: UI 컨트롤 관련 소스
+	4. develop.js: 편하게 개발하는 곳
+
+
+facility-admin
+
+facility-user
