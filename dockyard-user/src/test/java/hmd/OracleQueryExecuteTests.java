@@ -1,5 +1,7 @@
 package hmd;
 
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +24,12 @@ public class OracleQueryExecuteTests {
 	@Test
 	@Description("블록 정보 조회")
 	public void select_02() {
-		Block block = refQueryService.select_02(null);
+		Block param = new Block();
+		param.setMfgInd("1");
+		param.setTranMfgInd("8");
+		param.setAreagrp("A100");
+		param.setPlnwrkdte("20181224");
+		List<Block> block = refQueryService.select_02(param);
 		log.info("{}", block);
 	}
 
