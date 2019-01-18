@@ -18,4 +18,12 @@ public class RefQueryServiceImpl implements RefQueryService {
 	public List<Block> select_02(Block block) {
 		return refBlockMapper.select_02(block);
 	}
+
+	public List<Block> select_02_except_style(Block block) {
+		return refBlockMapper.select_02_except_style(block);
+	}
+
+	public List<Block> select_02_correct_lonlat(Block block) {
+		return refBlockMapper.select_02_correct_lonlat(block);
+	}
 }

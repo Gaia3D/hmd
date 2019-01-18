@@ -14,4 +14,8 @@ public interface RefQueryMapper {
 	 * @return
 	 */
 	List<Block> select_02(Block block);
+
+	List<Block> select_02_except_style(Block block);
+
+	List<Block> select_02_correct_lonlat(Block block);
 }

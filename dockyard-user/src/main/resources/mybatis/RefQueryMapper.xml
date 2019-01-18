@@ -114,9 +114,14 @@
 			JOIN (
 				SELECT
 					T1.SHIP_NO, T1.BLOCK, SUBSTR(MAX(SYS_CONNECT_BY_PATH(T1.HHIX ||','|| HHIY, ';')), 2) CTIPOINT
-                   FROM (
+				FROM (
                    	SELECT
-                   		T1.SHIP_NO, T1.BLOCK, T1.SEQNO, T2.JIBUN, T2.MFG_IND, T1.WGS84_LONGI * (SELECT MULUSE1 FROM TB0 WHERE DTLCOD = 'Z6') WGS84_LONGI, ROUND(T1.WGS84_LATI * (SELECT MULUSE1 FROM TB0 WHERE DTLCOD = 'LA') * (SELECT MULUSE1 FROM TB0 WHERE DTLCOD = 'Z6'), 15) WGS84_LATI, T1.WGS84_LONGI * (SELECT MULUSE1 FROM TB0 WHERE DTLCOD = 'Z6') HHIX, ROUND(T1.WGS84_LATI * (SELECT MULUSE1 FROM TB0 WHERE DTLCOD = 'LA') * (SELECT MULUSE1 FROM TB0 WHERE DTLCOD = 'Z6'), 15) HHIY, T4.AREAGRP, T3.JBNGRP
+                   		T1.SHIP_NO, T1.BLOCK, T1.SEQNO, T2.JIBUN, T2.MFG_IND,
+                   		T1.WGS84_LONGI * (SELECT MULUSE1 FROM TB0 WHERE DTLCOD = 'Z6') WGS84_LONGI,
+                   		ROUND(T1.WGS84_LATI * (SELECT MULUSE1 FROM TB0 WHERE DTLCOD = 'LA') * (SELECT MULUSE1 FROM TB0 WHERE DTLCOD = 'Z6'), 15) WGS84_LATI,
+                   		T1.WGS84_LONGI * (SELECT MULUSE1 FROM TB0 WHERE DTLCOD = 'Z6') HHIX,
+                   		ROUND(T1.WGS84_LATI * (SELECT MULUSE1 FROM TB0 WHERE DTLCOD = 'LA') * (SELECT MULUSE1 FROM TB0 WHERE DTLCOD = 'Z6'), 15) HHIY,
+                   		T4.AREAGRP, T3.JBNGRP
 					FROM PM07_D30 T1
 					JOIN PM07_D20 T2 ON T1.SHIP_NO = T2.SHIP_NO AND T1.BLOCK = T2.BLOCK AND NOT (T1.WGS84_LONGI IS NULL AND T1.WGS84_LATI IS NULL)
 					JOIN PM07_A70 T3 ON T2.JIBUN = T3.JIBUN AND T2.MFG_IND = T3.MFG_IND AND T3.YNUSE = 'Y'
@@ -126,40 +131,41 @@
 					WHERE T2.CURGBN = 'P'
 					AND (T6.MFG_IND1 = #{mfgInd} OR T6.MFG_IND2 = #{mfgInd})
 					AND (T6.MFG_IND1 = T3.MFG_IND OR T6.MFG_IND2 = T3.MFG_IND)
-					AND (CASE WHEN T2.MFG_IND <> 'C' AND (T1.WGS84_LONGI IS NULL OR T1.WGS84_LATI IS NULL) THEN 'X' ELSE 'O' END) = 'O') T1
-					GROUP BY T1.SHIP_NO, T1.BLOCK, T1.JIBUN, T1.MFG_IND
-					CONNECT BY PRIOR T1.SEQNO  = T1.SEQNO - 1
-					AND PRIOR T1.SHIP_NO = T1.SHIP_NO
-					AND PRIOR T1.BLOCK = T1.BLOCK
-					START WITH T1.SEQNO = 1
-				) T2 ON T1.SHIP_NO = T2.SHIP_NO AND T1.BLOCK = T2.BLOCK
-				JOIN PM07_A70 T3 ON T1.JIBUN = T3.JIBUN AND T1.MFG_IND = T3.MFG_IND AND T3.YNUSE = 'Y'
-				JOIN PM07_E20 T4 ON T3.JBNGRP = T4.JBNGRP
-				JOIN PM07_E30 T5 ON T4.JBNGRP = T5.JBNGRP AND T5.AREAGRP = #{areagrp}
-				LEFT JOIN (
-					SELECT B.JBNGRP OBJIDB, MAX(A.OBJID) OBJIDR
-					/* HJ:::
-					FROM PM07_E50 A, PM07_E20 B
-					▼ 1 line change */
-					FROM (SELECT '5-F-07' OBJIDB, '10' OBJID, 'B' PGRP, 'R' OBJTYP FROM DUAL) A, PM07_E20 B
-					WHERE A.OBJTYP = 'R' AND B.JBNGRP = 'B'
-					AND A.PGRP = B.JBNGRP
-					GROUP BY B.JBNGRP
-				) T6 ON T4.JBNGRP = T6.OBJIDB
-				-- 블록과 묶여있는 정반은 화면에 단독으로 그리지 않는다.
-               	LEFT JOIN PM07_D50 T7 ON T1.SHIP_NO = T7.SHIP_NO AND T1.BLOCK = T7.BLOCK
-              		WHERE T1.CURGBN = 'P'
-                	AND (T1.SHIP_NO, T1.BLOCK) NOT IN (SELECT 'J00000' SHIP_NO, PLATEID BLOCK
-                                                     	FROM PM07_D20
-                                                    	WHERE CURGBN = 'P'
-                                                      	AND PLATEID IS NOT NULL)
-                	AND NOT EXISTS (SELECT 1
-								FROM PM07_D30
-								WHERE T1.SHIP_NO = SHIP_NO
-								AND T1.BLOCK = BLOCK
-								AND (WGS84_LATI = 0 OR WGS84_LONGI = 0)
-								AND ROWNUM = 1)
-                	AND NOT EXISTS (SELECT 1
+					AND (CASE WHEN T2.MFG_IND <> 'C' AND (T1.WGS84_LONGI IS NULL OR T1.WGS84_LATI IS NULL) THEN 'X' ELSE 'O' END) = 'O'
+				) T1
+				GROUP BY T1.SHIP_NO, T1.BLOCK, T1.JIBUN, T1.MFG_IND
+				CONNECT BY PRIOR T1.SEQNO  = T1.SEQNO - 1
+				AND PRIOR T1.SHIP_NO = T1.SHIP_NO
+				AND PRIOR T1.BLOCK = T1.BLOCK
+				START WITH T1.SEQNO = 1
+			) T2 ON T1.SHIP_NO = T2.SHIP_NO AND T1.BLOCK = T2.BLOCK
+			JOIN PM07_A70 T3 ON T1.JIBUN = T3.JIBUN AND T1.MFG_IND = T3.MFG_IND AND T3.YNUSE = 'Y'
+			JOIN PM07_E20 T4 ON T3.JBNGRP = T4.JBNGRP
+			JOIN PM07_E30 T5 ON T4.JBNGRP = T5.JBNGRP AND T5.AREAGRP = #{areagrp}
+			LEFT JOIN (
+				SELECT B.JBNGRP OBJIDB, MAX(A.OBJID) OBJIDR
+				/* HJ:::
+				FROM PM07_E50 A, PM07_E20 B
+				▼ 1 line change */
+				FROM (SELECT '5-F-07' OBJIDB, '10' OBJID, 'B' PGRP, 'R' OBJTYP FROM DUAL) A, PM07_E20 B
+				WHERE A.OBJTYP = 'R' AND B.JBNGRP = 'B'
+				AND A.PGRP = B.JBNGRP
+				GROUP BY B.JBNGRP
+			) T6 ON T4.JBNGRP = T6.OBJIDB
+			-- 블록과 묶여있는 정반은 화면에 단독으로 그리지 않는다.
+           	LEFT JOIN PM07_D50 T7 ON T1.SHIP_NO = T7.SHIP_NO AND T1.BLOCK = T7.BLOCK
+			WHERE T1.CURGBN = 'P'
+			AND (T1.SHIP_NO, T1.BLOCK) NOT IN (SELECT 'J00000' SHIP_NO, PLATEID BLOCK
+												FROM PM07_D20
+												WHERE CURGBN = 'P'
+												AND PLATEID IS NOT NULL)
+			AND NOT EXISTS (SELECT 1
+							FROM PM07_D30
+							WHERE T1.SHIP_NO = SHIP_NO
+							AND T1.BLOCK = BLOCK
+							AND (WGS84_LATI = 0 OR WGS84_LONGI = 0)
+							AND ROWNUM = 1)
+			AND NOT EXISTS (SELECT 1
 							FROM PM07_A75
 							WHERE T1.JIBUN = JIBUN
 							AND T1.MFG_IND = MFG_IND
@@ -314,7 +320,200 @@
 		]]>
 	</select>
 
+	<!-- 블록 정보 조회_스타일 제거-->
+	<select id="select_02_except_style" parameterType="block" resultType="block">
+		/* select_02_except_style */
+		<![CDATA[
+		WITH tb0 AS (
+		    SELECT *
+		    FROM pm07_a10
+		    WHERE mfg_ind = '1'
+		    AND lrgcod  = 'PA'
+		    AND midcod  = '20'
+		    AND dtlcod <> '_'
+		)
+		SELECT *
+		FROM (
+		    SELECT
+		        a.*, ' ' issave,
+		        DECODE (rot_type, 'L*B', garo, 'B*L', sero, 'L*D', garo, 'D*L', nopi, 'B*D', sero, 'D*B', nopi) wid,
+		        DECODE (rot_type, 'L*B', sero, 'B*L', garo, 'L*D', nopi, 'D*L', garo, 'B*D', nopi, 'D*B', sero) len,
+		        '' as xyposition
+		    FROM (
+		        SELECT
+		            t1.ship_no, t1.block,
+		            t5.areagrp, t4.jbngrp, t6.objidr, 0 jbnx, 0 jbny, 0 smaxy, t1.jibun, 'G' fix_stat, '' est_outdt, 'A' tp_appdir,
+		            CASE WHEN SUBSTR(t2.ctipoint,LENGTH(t2.ctipoint),1) <> ';' THEN t2.ctipoint||';' END ctipointa,
+		            CASE WHEN SUBSTR(t2.ctipoint,LENGTH(t2.ctipoint),1) <> ';' THEN t2.ctipoint||';' END ctipointb,
+		            t5.stx hhistartx, t5.sty hhistarty, 999 waitday, t1.blkdirgbn, t1.blkdir_longi blkdirtsx, t1.blkdir_lati blkdirtsy,
+		            '' blockdescr,
+		            null status,
+		            ' ' orderinf, ' ' dn, ' ' orderinf2, ' ' dn2, 'normal' blkstats, ' ' gship, ' ' gblock,
+		            '' blockschstat, '' blockschstat2, t1.sorn ship_nogubun, 'N' pegubun, '' fjibungbn, '_' transstatus,
+		            DECODE(TRIM(t7.block), '', 'N', 'Y') memoyn, t7.usercont memotxt, t7.wgs84_longi memox, t7.wgs84_lati memoy,
+		            t7.garo memog, t7.sero memos, NVL(TRIM(t7.ynhide), 'Y') memohyn,
+		            null cur_pro, null nxt_pro,
+		            '' itemdescr,
+		            '' itemprocess,
+		            '' itemplaninfo, -- jbn,job_no
+		            'S' shipgubun,
+		            '5' dashstyle, -- (dashstyle = 5 : 일반블록, 1 : 가상블록)
+		            t1.plateid, t1.garo, t1.sero, t1.nopi, t1.wgt, t1.rot_type, t1.erect_yn, 'P' as curgbn, t1.stocksdte, -100 as orderid
+		        FROM pm07_d20 t1
+		        JOIN (
+		            SELECT
+		                T1.SHIP_NO, T1.BLOCK, SUBSTR(MAX(SYS_CONNECT_BY_PATH(T1.HHIX ||','|| HHIY, ';')), 2) CTIPOINT
+		               FROM (
+		                SELECT
+		                    T1.SHIP_NO, T1.BLOCK, T1.SEQNO, T2.JIBUN, T2.MFG_IND,
+		                    T1.WGS84_LONGI * (SELECT MULUSE1 FROM TB0 WHERE DTLCOD = 'Z6') WGS84_LONGI,
+		                    ROUND(T1.WGS84_LATI * (SELECT MULUSE1 FROM TB0 WHERE DTLCOD = 'LA') * (SELECT MULUSE1 FROM TB0 WHERE DTLCOD = 'Z6'), 15) WGS84_LATI,
+		                    T1.WGS84_LONGI * (SELECT MULUSE1 FROM TB0 WHERE DTLCOD = 'Z6') HHIX,
+		                    ROUND(T1.WGS84_LATI * (SELECT MULUSE1 FROM TB0 WHERE DTLCOD = 'LA') * (SELECT MULUSE1 FROM TB0 WHERE DTLCOD = 'Z6'), 15) HHIY,
+		                    T4.AREAGRP, T3.JBNGRP
+		                FROM PM07_D30 T1
+		                JOIN PM07_D20 T2 ON T1.SHIP_NO = T2.SHIP_NO AND T1.BLOCK = T2.BLOCK AND NOT (T1.WGS84_LONGI IS NULL AND T1.WGS84_LATI IS NULL)
+		                JOIN PM07_A70 T3 ON T2.JIBUN = T3.JIBUN AND T2.MFG_IND = T3.MFG_IND AND T3.YNUSE = 'Y'
+		                JOIN PM07_E30 T4 ON T3.JBNGRP = T4.JBNGRP AND T4.AREAGRP = 'A100'
+		                JOIN PM07_A75 T5 ON T3.JIBUN = T5.JIBUN AND T3.MFG_IND = T5.MFG_IND
+		                JOIN PM07_E10 T6 ON T4.AREAGRP = T6.AREAGRP
+		                WHERE T2.CURGBN = 'P'
+		                AND (T6.MFG_IND1 = '1' OR T6.MFG_IND2 = '1')
+		                AND (T6.MFG_IND1 = T3.MFG_IND OR T6.MFG_IND2 = T3.MFG_IND)
+		                AND (CASE WHEN T2.MFG_IND <> 'C' AND (T1.WGS84_LONGI IS NULL OR T1.WGS84_LATI IS NULL) THEN 'X' ELSE 'O' END) = 'O') T1
+		                GROUP BY T1.SHIP_NO, T1.BLOCK, T1.JIBUN, T1.MFG_IND
+		                CONNECT BY PRIOR T1.SEQNO  = T1.SEQNO - 1
+		                AND PRIOR T1.SHIP_NO = T1.SHIP_NO
+		                AND PRIOR T1.BLOCK = T1.BLOCK
+		                START WITH T1.SEQNO = 1
+		            ) T2 ON T1.SHIP_NO = T2.SHIP_NO AND T1.BLOCK = T2.BLOCK
+		            JOIN PM07_A70 T3 ON T1.JIBUN = T3.JIBUN AND T1.MFG_IND = T3.MFG_IND AND T3.YNUSE = 'Y'
+		            JOIN PM07_E20 T4 ON T3.JBNGRP = T4.JBNGRP
+		            JOIN PM07_E30 T5 ON T4.JBNGRP = T5.JBNGRP AND T5.AREAGRP = 'A100'
+		            LEFT JOIN (
+		                SELECT B.JBNGRP OBJIDB, MAX(A.OBJID) OBJIDR
+		                FROM (SELECT '5-F-07' OBJIDB, '10' OBJID, 'B' PGRP, 'R' OBJTYP FROM DUAL) A, PM07_E20 B
+		                WHERE A.OBJTYP = 'R' AND B.JBNGRP = 'B'
+		                AND A.PGRP = B.JBNGRP
+		                GROUP BY B.JBNGRP
+		            ) T6 ON T4.JBNGRP = T6.OBJIDB
+		            LEFT JOIN PM07_D50 T7 ON T1.SHIP_NO = T7.SHIP_NO AND T1.BLOCK = T7.BLOCK
+		            --LEFT JOIN PTB_STD_MFGIND T8 ON T8.MFG_IND = F_GET_NEXT_MFGIND_BTC(T1.SHIP_NO, T1.BLOCK, '1')
+		                WHERE T1.CURGBN = 'P'
+		                AND (T1.SHIP_NO, T1.BLOCK) NOT IN (SELECT 'J00000' SHIP_NO, PLATEID BLOCK
+		                                                    FROM PM07_D20
+		                                                    WHERE CURGBN = 'P'
+		                                                    AND PLATEID IS NOT NULL) -- 블록과 묶여있는 정반은 화면에 단독으로 그리지 않는다.
+		                AND NOT EXISTS (SELECT 1
+		                            FROM PM07_D30
+		                            WHERE T1.SHIP_NO = SHIP_NO
+		                            AND T1.BLOCK = BLOCK
+		                            AND (WGS84_LATI = 0 OR WGS84_LONGI = 0)
+		                            AND ROWNUM = 1)
+		                AND NOT EXISTS (SELECT 1
+		                        FROM PM07_A75
+		                        WHERE T1.JIBUN = JIBUN
+		                        AND T1.MFG_IND = MFG_IND
+		                        AND (WGS84_LATI = 0 OR WGS84_LONGI = 0)
+		                        AND ROWNUM = 1)
+		        UNION ALL
+		        -- 신청블록중 현지번에 없는 블록
+		        SELECT
+		            T1.SHIP_NO, T1.BLOCK,
+		            T5.AREAGRP, T4.JBNGRP, '' OBJIDR, 0 JBNX, 0 JBNY, 0 SMAXY, T3.JIBUN, 'G' FIX_STAT, '' EST_OUTDT, 'A' TP_APPDIR,
+		            (CASE WHEN (SELECT COUNT(*) FROM PM07_D37 WHERE ORDERID = T1.ORDERID ) = 4
+		            THEN (SELECT LISTAGG(WGS84_LONGI * (SELECT MULUSE1 FROM TB0 WHERE DTLCOD = 'Z6') || ',' ||
+		                    ROUND(WGS84_LATI * (SELECT MULUSE1 FROM TB0 WHERE DTLCOD = 'LA') * (SELECT MULUSE1 FROM TB0 WHERE DTLCOD = 'Z6'), 15), ';')
+		                    WITHIN GROUP (ORDER BY SEQNO)
+		                    FROM PM07_D37 WHERE ORDERID = T1.ORDERID GROUP BY ORDERID)
+		            ELSE null
+		            END) AS CTIPOINTA,
+		            (CASE WHEN (SELECT COUNT(*) FROM PM07_D37 WHERE ORDERID = T1.ORDERID ) = 4
+		            THEN (SELECT LISTAGG(WGS84_LONGI * (SELECT MULUSE1 FROM TB0 WHERE DTLCOD = 'Z6') || ',' ||
+		                    ROUND(WGS84_LATI * (SELECT MULUSE1 FROM TB0 WHERE DTLCOD = 'LA') * (SELECT MULUSE1 FROM TB0 WHERE DTLCOD = 'Z6'), 15), ';')
+		                    WITHIN GROUP (ORDER BY SEQNO)
+		                    FROM PM07_D37 WHERE ORDERID = T1.ORDERID GROUP BY ORDERID)
+		            ELSE null
+		            END) AS CTIPOINTB,
+		            T5.STX HHISTARTX, T5.STY HHISTARTY, 999 WAITDAY, '' BLKDIRGBN, 0 BLKDIRTSX, 0 BLKDIRTSY,
+		            T1.BLOCK BLOCKDESCR,
+		            NULL STATUS,
+		            ' ' orderinf, ' ' dn, ' ' orderinf2, ' ' dn2, 'normal' blkstats, ' ' gship, ' ' gblock,
+		            '' blockschstat, '' blockschstat2, t1.sorn ship_nogubun, 'N' pegubun, '' fjibungbn, '_' transstatus,
+		            'N' memoyn, '' memotxt, 0 memox, 0 memoy, 0 memog, 0 memos, 'y' memohyn,
+		            null cur_pro, null nxt_pro,
+		            '' itemdescr,
+		            '' itemprocess,
+		            '' itemplaninfo, -- jbn,job_no
+		            'S' shipgubun,
+		            '1' dashstyle, -- (dashstyle = 5 : 일반블록, 1 : 가상블록)
+		            ' ' plateid, -- 계획 시점에는 다른 블록에 있을수 있어 공백
+		            15 garo, 15 sero, 2 nopi, 200 wgt,
+		            'L*B' rot_type, 'N' erect_yn, 'X' as curgbn, null as stocksdte, t1.orderid
+		        FROM PM07_C20 T1
+		        JOIN PM07_A70 T2 ON DECODE(T1.TRANSTATUS, 'T', T1.MOVJBN, T1.CURJBN) = NVL(T2.JIBUN, T2.REAL_JIBUN)
+		                            AND T1.MFG_IND IN (T2.MFG_IND, (CASE WHEN T2.MFG_IND = '1' THEN '7' WHEN T2.MFG_IND = '7' THEN '1' END))
+		        JOIN PM07_A70 T3 ON NVL(T2.REAL_JIBUN, T2.JIBUN) = T3.JIBUN AND T2.MFG_IND = T3.MFG_IND AND T3.YNUSE = 'Y'
+		        JOIN PM07_E20 T4 ON T3.JBNGRP = T4.JBNGRP
+		        JOIN PM07_E30 T5 ON T4.JBNGRP = T5.JBNGRP AND T5.AREAGRP = 'A100'
+		        WHERE T1.PLNWRKDTE = TO_DATE(20181224, 'YYYYMMDD')
+		        AND 20181224 IS NOT NULL
+		        AND TRANSTATUS IN ('W', 'M', 'T')
+		        AND T1.DELCOD <> 'X'
+		        AND CANDEL IS NULL
+		        AND T1.MFG_IND = '8'
+		        AND T1.SU = 'S'
+		        AND T1.ORDERID = (SELECT MIN(ORDERID) FROM PM07_C20 WHERE MFG_IND = T1.MFG_IND AND SHIP_NO = T1.SHIP_NO AND BLOCK = T1.BLOCK AND PLNWRKDTE = T1.PLNWRKDTE AND SU = 'S')
+		        AND (T1.SHIP_NO, T1.BLOCK) NOT IN (SELECT SHIP_NO, BLOCK
+		                                            FROM PM07_D20
+		                                            WHERE CURGBN = 'P'
+		                                            AND MFG_IND IN (T1.MFG_IND, (CASE WHEN T1.MFG_IND = '1' THEN '7' WHEN T1.MFG_IND = '7' THEN '1' END))
+		                                            MINUS
+		                                            SELECT 'J00000' AS SHIP_NO, PLATEID
+		                                            FROM PM07_D20 X
+		                                            WHERE CURGBN = 'P'
+		                                            AND MFG_IND IN (T1.MFG_IND, (CASE WHEN T1.MFG_IND = '1' THEN '7' WHEN T1.MFG_IND = '7' THEN '1' END))
+		                                        )
+		    ) a
+		    ORDER BY
+		        CASE WHEN erect_yn = 'Y' THEN stocksdte ELSE null END ASC,
+		        CASE WHEN wid > len THEN wid ELSE len END DESC, ship_nogubun, ship_no, block
+		)
+		]]>
+	</select>
 
+	<!-- 블록 정보 조회_경위도 보정 -->
+	<select id="select_02_correct_lonlat" parameterType="block" resultType="block">
+		/* select_02_correct_lonlat */
+		<![CDATA[
+		WITH tb0 AS (
+		    SELECT *
+		    FROM pm07_a10
+		    WHERE mfg_ind = '1'
+		    AND lrgcod  = 'PA'
+		    AND midcod  = '20'
+		    AND dtlcod <> '_'
+		)
+		SELECT
+		    T1.SHIP_NO, T1.BLOCK, T1.SEQNO, T2.JIBUN, T2.MFG_IND,
+		    T1.WGS84_LONGI * (SELECT MULUSE1 FROM TB0 WHERE DTLCOD = 'Z6') WGS84_LONGI,
+		    ROUND(T1.WGS84_LATI * (SELECT MULUSE1 FROM TB0 WHERE DTLCOD = 'LA') * (SELECT MULUSE1 FROM TB0 WHERE DTLCOD = 'Z6'), 15) WGS84_LATI,
+		    T1.WGS84_LONGI * (SELECT MULUSE1 FROM TB0 WHERE DTLCOD = 'Z6') HHIX,
+		    ROUND(T1.WGS84_LATI * (SELECT MULUSE1 FROM TB0 WHERE DTLCOD = 'LA') * (SELECT MULUSE1 FROM TB0 WHERE DTLCOD = 'Z6'), 15) HHIY,
+		    T1.WGS84_LONGI * (SELECT MULUSE1 FROM TB0 WHERE DTLCOD = 'Z6') WGS84_LONGI_except_correct,
+		    ROUND(T1.WGS84_LATI * (SELECT MULUSE1 FROM TB0 WHERE DTLCOD = 'Z6'), 15) WGS84_LATI_except_correct
+		FROM PM07_D30 T1
+		JOIN PM07_D20 T2 ON T1.SHIP_NO = T2.SHIP_NO AND T1.BLOCK = T2.BLOCK AND NOT (T1.WGS84_LONGI IS NULL AND T1.WGS84_LATI IS NULL)
+		JOIN PM07_A70 T3 ON T2.JIBUN = T3.JIBUN AND T2.MFG_IND = T3.MFG_IND AND T3.YNUSE = 'Y'
+		JOIN PM07_E30 T4 ON T3.JBNGRP = T4.JBNGRP AND T4.AREAGRP = 'A100'
+		JOIN PM07_A75 T5 ON T3.JIBUN = T5.JIBUN AND T3.MFG_IND = T5.MFG_IND
+		JOIN PM07_E10 T6 ON T4.AREAGRP = T6.AREAGRP
+		WHERE T2.CURGBN = 'P'
+		AND (T6.MFG_IND1 = '1' OR T6.MFG_IND2 = '1')
+		AND (T6.MFG_IND1 = T3.MFG_IND OR T6.MFG_IND2 = T3.MFG_IND)
+		AND (CASE WHEN T2.MFG_IND <> 'C' AND (T1.WGS84_LONGI IS NULL OR T1.WGS84_LATI IS NULL) THEN 'X' ELSE 'O' END) = 'O'
+		]]>
+	</select>
 
 	<select id="select_02_1" parameterType="block" resultType="block">
 		/* select_02_1 */
