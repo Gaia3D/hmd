@@ -80,6 +80,12 @@ function toggleLayer(obj){
 	gis.layerOnOff(targetlayerId, showLayerNameList);
 }
 
+function toggleTestLayer(obj) {
+	var targetlayerId = $(obj).data('target-layer');
+	var layerName = $(obj).data('layer-name');
+	dev.layerType(obj, targetlayerId, layerName);
+}
+
 $(function() {
 
 /***** NAV WRAP: 메뉴 *****/
