@@ -67,6 +67,20 @@
 						</li>
 					</ul>
 				</li>
+				<li class="testLayer on">
+					<p>테스트 레이어</p>
+					<ul>
+						<li data-target-layer="block_layer" data-layer-name="point">
+							<span>POINT</span>
+						</li>
+						<li data-target-layer="block_layer" data-layer-name="line">
+							<span>LINE</span>
+						</li>
+						<li data-target-layer="block_layer" data-layer-name="polygon">
+							<span>POLYGON</span>
+						</li>
+					</ul>
+				</li>
 			</ul>
 
 
@@ -148,6 +162,12 @@
 			$(this).toggleClass('on');
 			toggleLayer(this);
 		});
+		
+		$('.testLayer li').click(function(){
+			$(this).toggleClass('on');
+			toggleTestLayer(this);
+		});
+		
 	});
 </script>
 </body>
