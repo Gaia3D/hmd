@@ -33,7 +33,7 @@ public class JDBCConnectionTest {
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			Connection conn = null;
-			conn = DriverManager.getConnection("jdbc:oracle:thin:@118.216.255.110:15210:gaia3d11g", "sys as sysdba", "gaia#doracle1");
+			conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:gaia3d", "test", "test");
 			PreparedStatement psmt = conn.prepareStatement("select 1 from dual");
 			ResultSet rs = null;
 			rs = psmt.executeQuery();
