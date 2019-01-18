@@ -20,4 +20,5 @@ public interface UserMapper {
 	 */
 	Long getUserTotalCount(User user);
 
+	int insertUser(User user);
 }

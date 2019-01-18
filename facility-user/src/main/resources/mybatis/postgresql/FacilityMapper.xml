@@ -9,4 +9,8 @@
 		SELECT COUNT(facility_id) FROM facility
 	</select>
 	
+	<insert id="insertFacility" parameterType="facility">
+		INSERT INTO facility(facility_id, facility_name) 
+		VALUES('1', '공장')
+	</insert>
 </mapper>

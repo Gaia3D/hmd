@@ -9,4 +9,7 @@
 		SELECT COUNT(user_id) FROM tb_users
 	</select>
 	
+	<insert id="insertUser" parameterType="user">
+		INSERT INTO tb_users VALUES('test2', 'test2', 'test2')
+	</insert>
 </mapper>
