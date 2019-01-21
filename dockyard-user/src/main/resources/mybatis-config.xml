@@ -11,6 +11,7 @@
 
  	<typeAliases>
  		<typeAlias type="hmd.domain.Block" alias="block"/>
+ 		<typeAlias type="hmd.domain.BlockPoint" alias="blockPoint"/>
 	</typeAliases>
 
 </configuration>

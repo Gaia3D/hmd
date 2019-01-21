@@ -65,5 +65,5 @@ function addFreaturePolygon() {
 // remove Feature
 function removeFeature(layerid) {
 	var layer = gis.getLayerById(layerid);
-	layer.getSource().removeFeature(featurePoint);
+	if(layer.getSource().getFeatures().length != 0) layer.getSource().removeFeature(featurePoint);
 }
