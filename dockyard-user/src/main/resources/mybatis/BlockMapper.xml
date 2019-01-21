@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="hmd.persistence.BlockMapper">
+
+	<!-- 블록의 개수 조회 -->
+	<select id="blockCount" resultType="int">
+		/* blockCount */
+		SELECT DISTINCT COUNT(DISTINCT block)
+		FROM PM07_D30
+	</select>
+	
+	<!-- 블록 리스트 조회 -->
+	<select id="getBlockList" resultType="blockPoint">
+		/* getBlockList */
+		<![CDATA[
+			SELECT A.*, ROWNUM
+			FROM (
+			    SELECT DISTINCT block
+			    FROM PM07_D30
+			    ORDER BY block
+			) A
+			WHERE ROWNUM <= 5
+		]]>
+	</select>
+	
+	<!-- 같은 블록의 위치정보(경위도) 조회 -->
+	<select id="getPointByBlock" parameterType="string" resultType="blockPoint">
+		/* getPointByBlock */
+		SELECT block, wgs84_lati lat, wgs84_longi lon
+		FROM PM07_D30
+		WHERE block = #{block}
+	</select>
+	
+</mapper>
