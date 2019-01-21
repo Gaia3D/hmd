@@ -68,9 +68,23 @@ public class OracleQueryExecuteTests {
 	}
 
 	@Test
-	@Description("진행 정보 조회")
+	@Description("지번 구분 조회")
 	public void select_02_1() {
 		log.info("test");
+		/*
+		 * SELECT gbn1, count(*)
+		 * FROM pm07_a70
+		 * GROUP BY gbn1
+		 */
+
+		/*
+		 SELECT a.ship_no, a.block, a.jibun, tp, gbn1, COUNT(*)
+		 FROM pm07_d20 a
+		 JOIN pm07_a70 b ON a.jibun = b.jibun AND a.mfg_ind = b.mfg_ind AND b.ynuse = 'Y'
+		 WHERE curgbn = 'P'
+		 AND a.mfg_ind = '1' -- 전체 사업장은 블록 2000개 미만, 사업장 본사는 800여개
+		 GROUP BY a.ship_no, a.block, a.jibun, gbn1, tp;
+		 */
 	}
 }
 

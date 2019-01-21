@@ -1,0 +1,7 @@
+1. 오라클
+	▶ 미포: Oracle Database 11g Enterprise Edition Release 11.2.0.4.0 - 64bit Production
+	▶ 개발: Oracle Database 11g Release 11.2.0.1.0 - 64bit Production
+			118.216.255.110 / 15210 / gaia3d11g / *** / ***
+
+2. mariaDB (미포, 개발환경 동일)
+	- mariaDB 10.2.13

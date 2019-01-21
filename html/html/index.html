@@ -83,33 +83,6 @@
 				</li>
 			</ul>
 
-
-			<!-- S: 레이어설정 -->
-			<div id="settingLayer" class="option" data-id="setting" style="top:175px; left: 230px; display:none;">
-				<div class="layerHeader">
-					<h3>설정({{selectedLayer.name}})</h3>
-					<button type="button" class="layerClose" title="닫기">닫기</button>
-				</div>
-				<div class="layerContents">
-					<ul class="layerSetup">
-						<li>
-							<label for="">투명도</label>
-							<input id="range-value" type="text" size="3" placeholder="100%" class="underline" :value="selectedLayer.alpha | toPercentString"><input id="range-slider" type="range" min="0" max="100" :value="selectedLayer.alpha | toPercent">
-						</li>
-						<li>
-							<label for="">스타일</label>
-							<input type="number" value="1" min="1" max="5" size="3" class="underline">
-							<input v-if="selectedLayer.color" type="color" class="picker" :value="selectedLayer.color | toHexColor">
-						</li>
-					</ul>
-					<div>
-						<button type="button" title="적용" class="focusA" style="width: 120px;" v-on:click="updateLayer()">적용</button>
-						<button type="button" title="초기화" class="basicA" v-on:click="initLayer()">초기화</button>
-						<button type="button" id="closeBtn" title="닫기" class="basicA">닫기</button>
-					</div>
-				</div>
-			</div>
-			<!-- E: 레이어설정  -->
 		</div>
 		<!-- E: 레이어 -->
 	</div>
@@ -162,12 +135,12 @@
 			$(this).toggleClass('on');
 			toggleLayer(this);
 		});
-		
+
 		$('.testLayer li').click(function(){
 			$(this).toggleClass('on');
 			toggleTestLayer(this);
 		});
-		
+
 	});
 </script>
 </body>
