@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="hmd.persistence.oracle.UserMapper">
+
+	<select id="getUserTotalCount" parameterType="user" resultType="long">
+		/* getUserTotalCount */
+		SELECT COUNT(user_id) FROM tb_users
+	</select>
+	
+	<insert id="insertUser" parameterType="user">
+		INSERT INTO tb_users VALUES('test2', 'test2', 'test2')
+	</insert>
+</mapper>
