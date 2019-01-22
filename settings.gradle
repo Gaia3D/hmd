@@ -1,21 +1,21 @@
 rootProject.name = 'hmd'
 
+include ':common'
 include ':gis-admin'
 include ':gis-user'
 include ':dockyard-admin'
 include ':dockyard-user'
 include ':facility-admin'
 include ':facility-user'
-include ':common'
 include ':html'
 include ':doc'
 
+project(':common').projectDir = "$rootDir/common" as File
 project(':gis-admin').projectDir = "$rootDir/gis-admin" as File
 project(':gis-user').projectDir = "$rootDir/gis-user" as File
 project(':dockyard-admin').projectDir = "$rootDir/dockyard-admin" as File
 project(':dockyard-user').projectDir = "$rootDir/dockyard-user" as File
 project(':facility-admin').projectDir = "$rootDir/facility-admin" as File
 project(':facility-user').projectDir = "$rootDir/facility-user" as File
-project(':common').projectDir = "$rootDir/common" as File
 project(':html').projectDir = "$rootDir/html" as File
 project(':doc').projectDir = "$rootDir/doc" as File
