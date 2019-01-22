@@ -7,8 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import hmd.domain.Facility;
+import hmd.domain.Bus;
 import hmd.domain.User;
+import hmd.service.BusService;
 import hmd.service.FacilityService;
 import hmd.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +25,9 @@ public class HelloWorldController {
 	@Autowired
 	private UserService userService;
 	
+	@Autowired
+	private BusService busService;
+	
 	/**
 	 * 모든 서비스 요청에 대한 이력
 	 * @param model
@@ -31,6 +35,8 @@ public class HelloWorldController {
 	 */
 	@RequestMapping(value = "index.do")
 	public String index(HttpServletRequest request, Model model) {
+		log.info("------------ bus count = {}", busService.getBusTotalCount(new Bus()));
+		
 		userService.insertUser(new User());
 		
 		return "/hello/index";

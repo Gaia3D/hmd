@@ -10,7 +10,7 @@ import lombok.ToString;
  */
 @Getter
 @Setter
-@ToString(callSuper=true)
+@ToString
 public class Facility {
 
 	private Long facility_id;

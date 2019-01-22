@@ -63,6 +63,7 @@ dependencies {
 	runtimeOnly('org.springframework.boot:spring-boot-devtools')
 	runtimeOnly('org.postgresql:postgresql')
 	runtimeOnly 'org.zenframework.z8.dependencies.commons:ojdbc6:2.0'
+	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client:1.7.4'
 	//runtimeOnly files('ojdbc6.jar')
 	
 	annotationProcessor("org.projectlombok:lombok:$lombokVersion")

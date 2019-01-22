@@ -7,6 +7,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class JDBCConnectionTest {
@@ -28,7 +29,7 @@ public class JDBCConnectionTest {
 		}
 	}
 	
-	@Test
+	@Ignore
 	public void oracleConnection() {
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
@@ -39,6 +40,23 @@ public class JDBCConnectionTest {
 			rs = psmt.executeQuery();
 			while (rs.next()) {
 				System.out.println("oracle test code 성공 . value = " + rs.getString(1));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Ignore
+	public void mariaConnection() {
+		try {
+			Class.forName("org.mariadb.jdbc.Driver");
+			Connection conn = null;
+			conn = DriverManager.getConnection("jdbc:mariadb://localhost/transport", "test", "test");
+			PreparedStatement psmt = conn.prepareStatement("select COUNT(*) from test");
+			ResultSet rs = null;
+			rs = psmt.executeQuery();
+			while (rs.next()) {
+				System.out.println("maria 성공 . value = " + rs.getString(1));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

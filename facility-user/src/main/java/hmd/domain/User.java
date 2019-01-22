@@ -8,7 +8,7 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@ToString(callSuper=true)
+@ToString
 public class User implements Serializable {/**
 	 * 
 	 */
