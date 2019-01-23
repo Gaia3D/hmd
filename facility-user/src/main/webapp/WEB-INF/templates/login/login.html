@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/xhtml" 
+	xmlns:th="http://www.thymeleaf.org" 
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+</head>
+<body>
+	<div>
+		<h2><span>User</span><br /><span>Login</span></h2>
+		<div>
+			<div>Content Management System</div>
+			<form id="loginForm" th:object="${loginForm}" method="post" th:action="@{/login/process-login.do}" onsubmit="return check();">
+				<label for="user_id"><span class="icon-glyph glyph-users"></span></label>
+				<input type="text" id="user_id" name="user_id" th:field="*{user_id}" maxlength="32" title="아이디" 
+					placeholder="아이디를 입력해 주세요." required="required" />
+				<label for="password"><span class="icon-glyph glyph-lock"></span></label>
+				<input type="password" id="password" name="password" th:field="*{password}" maxlength="32" title="비밀번호" 
+					placeholder="비밀번호" required="required" />
+				<input type="submit" value="Sign In" />
+			</form>					
+			<div>
+				Don't have an account? &nbsp;<a href="#">Sign up</a>
+				<br />
+				Forgot your password? &nbsp;<a href="/login/find-password.do">Click</a>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
