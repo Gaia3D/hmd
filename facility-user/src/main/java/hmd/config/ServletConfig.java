@@ -6,6 +6,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.FilterType;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.core.Ordered;
@@ -31,6 +32,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 
 @Slf4j
+@Import(ThymeleafConfig.class)
 @EnableWebMvc
 @Configuration
 @ComponentScan(basePackages = { "hmd.config, hmd.controller, hmd.interceptor, hmd.validator" }, includeFilters = {
