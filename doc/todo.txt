@@ -1,5 +1,10 @@
 1 보안
  - 고객사 이름을 절대 readme 나 주석 등에 남기지 말것
+
+
+고객사 환경
+ - 오라클 : Oracle Database 11g Enterprise Edition Release 11.2.0.4.0 - 64bit Production
+ - maria : mariadb 10.2.13
  
 2 git 사용법
  - commit 시 주석 상세히 달기
