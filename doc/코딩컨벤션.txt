@@ -1,0 +1,27 @@
+1. naming 규칙
+
+	▶ 파일명 규칙
+	- java 파일은 대문자로 시작한다.
+	- js 파일은 소문자로 시작한다.
+	- xml 파일은 ---로 시작한다.
+
+	▶ HTML 규칙
+	- id는 camelCase 방식으로 표기한다.
+	- class는 camelCase 방식으로 표기한다.
+	- naming 첫 시작은 소문자로 시작한다. (숫자, 특수문자, 대문자 사용 지양)
+
+
+2. URL 정의
+
+	▶ block-admin
+	-
+
+	▶ block-user
+	-
+
+	▶ facility-admin
+	-
+
+	▶ facility-user
+	-
+

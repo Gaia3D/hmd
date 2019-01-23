@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="hmd.persistence.postgresql.LayerMapper">
+
+	<select id="getLayerTotalCount" parameterType="layer" resultType="long">
+		/* getLayerTotalCount */
+		SELECT COUNT(layer_id) FROM layer
+	</select>
+	
+	<insert id="insertLayer" parameterType="layer">
+		INSERT INTO layer(layer_id, layer_title) 
+		VALUES('1', 'Dock Gate')
+	</insert>
+</mapper>

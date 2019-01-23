@@ -6,12 +6,10 @@
 <configuration>
 	<settings>
 		<setting name="lazyLoadingEnabled" value="false" />
-		<setting name="mapUnderscoreToCamelCase" value="true"/>
 	</settings>
-
- 	<typeAliases>
- 		<typeAlias type="hmd.domain.Block" alias="block"/>
- 		<typeAlias type="hmd.domain.BlockPoint" alias="blockPoint"/>
+	
+	<typeAliases>
+		<typeAlias type="hmd.domain.User" alias="user"/>
 	</typeAliases>
-
+	
 </configuration>
