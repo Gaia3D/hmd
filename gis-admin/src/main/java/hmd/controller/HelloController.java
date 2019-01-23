@@ -13,7 +13,7 @@ public class HelloController {
 
 	@GetMapping("/hello")
 	public String Hello() {
-		log.info("@@@@@ log 출력");
-		return "index";
+		log.info("@@@@@ /gis/hello");
+		return "gis";
 	}
 }

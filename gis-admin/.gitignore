@@ -24,3 +24,7 @@
 /.nb-gradle/
 /build/
 /bin/
+/resource/static/
+/resource/templates/
+
+
