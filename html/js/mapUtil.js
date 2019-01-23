@@ -1,15 +1,16 @@
-HMD.GIS.Util = (function(){
+HMD.GIS.Util = (function() {
 	return {
 		/**
 		 * 명시적인 레이어 ID를 통해 Layer 객체를 얻는다.
 		 * @param {String} layerID
 		 * @returns {Object} Layer
 		 */
-		getLayerById: function(layerId){
+		getLayerById: function(layerId) {
+			// valid
 			var layers = map.getLayers().getArray();
 			var layer = null;
 
-			for(var i in layers){
+			for(var i in layers){	 // 브라우저확인
 				if(layers[i].get('id') === layerId){
 					layer = layers[i];
 					break;
@@ -23,14 +24,16 @@ HMD.GIS.Util = (function(){
 		 * @param {String} targetLayerId: 갱신할 레이어의 ID		(예) tile_layer, base_layer, ...
 		 * @param {String} showLayerNameList: 보여줄 레이어 이름	(예) ['layer_1', 'layer_2', ...]
 		 */
-		layerOnOff: function(targetLayerId, showLayerNameList){
+		// 이름바꾸기
+		layerOnOff: function(targetLayerId, showLayerNameList) {	 // wms
+			// valid
 			var targetLayer = this.getLayerById(targetLayerId);
 			targetLayer.getSource().updateParams({'layers': showLayerNameList});
 			targetLayer.setVisible(showLayerNameList.length !== 0);
 		}
 	}
 })();
-
+// 빼고
 var gis = HMD.GIS.Util;
 
 //gis = $.extend({}, HMD.GIS, HMD.GIS.Util);

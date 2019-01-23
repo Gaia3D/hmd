@@ -69,7 +69,7 @@ HMD.GIS = (function(){ // 즉시실행함수
 	 */
 	return {
 		projDefs: function(){
-			Object.keys(_projCode).forEach(function(key){
+			Object.keys(_projCode).forEach(function(key){	// 브라우저 확인(9,10,11,크롬 확인)
 				proj4.defs(key, _projCode[key]);
 			});
         },
