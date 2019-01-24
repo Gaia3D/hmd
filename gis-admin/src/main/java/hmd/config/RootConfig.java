@@ -4,6 +4,7 @@ import java.util.Properties;
 
 import javax.transaction.SystemException;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ComponentScan.Filter;
@@ -31,10 +32,17 @@ import lombok.extern.slf4j.Slf4j;
 				excludeFilters = @Filter(type = FilterType.ANNOTATION, value = Controller.class) )
 public class RootConfig {
 	
+	@Autowired
+	private PropertiesConfig propertiesConfig;
+	
 	@Bean(name="userTransactionService", initMethod = "init", destroyMethod = "shutdownForce")
     public UserTransactionServiceImp userTransactionService() {
 		Properties properties = new Properties();
 		properties.setProperty("com.atomikos.icatch.service",  "com.atomikos.icatch.standalone.UserTransactionServiceFactory");
+        properties.setProperty("com.atomikos.icatch.log_base_name", propertiesConfig.getLogBaseName());
+        properties.setProperty("com.atomikos.icatch.output_dir", propertiesConfig.getOutputDir());
+        properties.setProperty("com.atomikos.icatch.log_base_dir", propertiesConfig.getLogBaseDir());
+
 		UserTransactionServiceImp userTransactionServiceImp = new UserTransactionServiceImp(properties);
 		return userTransactionServiceImp;
 	}
