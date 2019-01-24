@@ -33,7 +33,7 @@ public class ThymeleafConfig {
 	@Bean(name = "templateEngine")
 	public SpringTemplateEngine templateEngine(@Qualifier("templateResolver") ServletContextTemplateResolver templateResolver) {
 		SpringTemplateEngine engine = new SpringTemplateEngine();
-		engine.setDialect(new LayoutDialect());
+		engine.addDialect(new LayoutDialect());
 		engine.setTemplateResolver(templateResolver);
 		return engine;
 	}
