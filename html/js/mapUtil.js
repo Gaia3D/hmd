@@ -43,3 +43,22 @@ HMD.GIS.Util = (function() {
 var gis = HMD.GIS.Util;
 
 //gis = $.extend({}, HMD.GIS, HMD.GIS.Util);
+
+function loadBlock(){
+	$.ajax({
+		url: 'http://localhost:8090/block',
+		type: 'post',
+		dataType: 'json',
+		data: {mfgInd: '1', areagrp: 'A100'},
+		success: function(a,b){
+
+		},
+		error: function(a,b,msg){
+
+		}
+	})
+}
+function addPolygon(coord){
+	var transCoord = coord;
+
+}

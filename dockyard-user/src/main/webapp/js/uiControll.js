@@ -66,6 +66,26 @@ function closeBtn(layer) {
 	});
 }
 
+function toggleLayer(obj){
+	var targetlayerId = $(obj).data('target-layer');
+	var showLayerList = $('.mapLayer li.on[data-target-layer='+ targetlayerId +']');
+	var showLayerNameList = [];
+
+	for(var i=0, len=showLayerList.length; i<len; i++){
+		var layer = $(showLayerList[i]);
+		var layerName = layer.data('layer-name');
+		showLayerNameList.push(layerName);
+	}
+
+	gis.layerOnOff(targetlayerId, showLayerNameList);
+}
+
+function toggleTestLayer(obj) {
+	var targetlayerId = $(obj).data('target-layer');
+	var layerName = $(obj).data('layer-name');
+	dev.layerType(obj, targetlayerId, layerName);
+}
+
 $(function() {
 
 /***** NAV WRAP: 메뉴 *****/

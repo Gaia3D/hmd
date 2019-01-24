@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import hmd.domain.Block;
 import hmd.domain.BlockPoint;
 import hmd.persistence.oracle.BlockMapper;
 import hmd.service.BlockService;
@@ -21,8 +22,13 @@ public class BlockServiceImpl implements BlockService {
 	}
 
 	@Override
-	public List<BlockPoint> getBlockList() {
-		return blockMapper.getBlockList();
+	public List<BlockPoint> getBlockListTmp() {
+		return blockMapper.getBlockListTmp();
+	}
+
+	@Override
+	public List<Block> getBlockList(Block block) {
+		return blockMapper.getBlockList(block);
 	}
 
 	@Override
