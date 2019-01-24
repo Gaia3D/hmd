@@ -10,7 +10,7 @@ import org.junit.Test;
 
 public class JDBCConnectionTest {
 
-    @Test
+    @Ignore
     public void postgresqlConnection() {
         try {
             Class.forName("org.postgresql.Driver");
@@ -44,12 +44,12 @@ public class JDBCConnectionTest {
         }
     }
 
-    @Ignore
+    @Test
     public void mariaConnection() {
         try {
             Class.forName("org.mariadb.jdbc.Driver");
             Connection conn = null;
-            conn = DriverManager.getConnection("jdbc:mariadb://192.168.207.131/facility", "gaia3d", "gaia#d");
+            conn = DriverManager.getConnection("jdbc:mariadb://localhost/facility", "test", "test");
             PreparedStatement psmt = conn.prepareStatement("select COUNT(*) from facility");
             ResultSet rs = null;
             rs = psmt.executeQuery();
