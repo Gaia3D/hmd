@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="hmd.persistence.postgresql.FacilityMapper">
+
+    <!-- 시설물 총 건수 -->
+    <select id="getFacilityTotalCount" parameterType="facility" resultType="int">
+        /* getFacilityTotalCount */
+        SELECT COUNT(facility_id) FROM facility
+    </select>
+
+    <insert id="insertFacility" parameterType="facility">
+        INSERT INTO facility(facility_id, facility_name)
+        VALUES('1', '공장')
+    </insert>
+</mapper>

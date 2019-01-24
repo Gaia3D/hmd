@@ -1,13 +1,14 @@
 buildscript {
-    ext {
-        springBootVersion = '2.1.1.RELEASE'
-    }
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-    }
+  ext {
+    springBootVersion = '2.1.2.RELEASE'
+    lombokVersion = '1.18.4'
+  }
+  repositories {
+    mavenCentral()
+  }
+  dependencies {
+    classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+  }
 }
 
 apply plugin: 'java'
@@ -16,40 +17,55 @@ apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'war'
 
-
 war {
-    baseName = 'facility-admin'
-    version = '0.0.1-SNAPSHOT'
+  baseName = 'facility-admin'
+  version = '0.0.1-SNAPSHOT'
 }
 
-group = 'gaia3d'
-version = '0.0.1-SNAPSHOT'
 compileJava {
-    sourceCompatibility = 1.8
-    targetCompatibility = 1.8
+  sourceCompatibility = 1.8
+  targetCompatibility = 1.8
 }
 compileJava.options.encoding = 'UTF-8'
 
 repositories {
-    mavenCentral()
+  mavenCentral()
 }
 
 configurations {
-    providedRuntime
+  providedRuntime
 }
-
 test {
-    exclude '**/*'
     //ignoreFailures = true
+    exclude '**/*'
 }
-
 dependencies {
-    implementation('org.springframework.boot:spring-boot-starter-web')
-    implementation('org.mybatis.spring.boot:mybatis-spring-boot-starter:1.3.2')
-    //implementation('com.oracle:ojdbc6:11.2.0.3')
-    runtimeOnly('org.springframework.boot:spring-boot-devtools')
-    runtimeOnly('org.postgresql:postgresql')
-    compileOnly('org.projectlombok:lombok')
-    providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
-    testImplementation('org.springframework.boot:spring-boot-starter-test')
+  implementation project(':common')
+  implementation('org.springframework.boot:spring-boot-starter-actuator') // 컨텍스트 빈, 환경 설정, 자동 설정, JVM 상태 등 모티터링
+  implementation('org.springframework.boot:spring-boot-starter-web')
+  implementation('org.mybatis.spring.boot:mybatis-spring-boot-starter:1.3.2')
+  implementation('org.springframework.security:spring-security-core')
+  implementation('org.springframework.boot:spring-boot-starter-aop')
+
+  implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+  implementation 'net.sourceforge.nekohtml:nekohtml:1.9.22'
+  implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:2.3.0'
+
+  implementation 'org.springframework.boot:spring-boot-starter-jta-atomikos' //다중 DataSource 트랜잭션 처리
+
+  runtimeOnly('org.springframework.boot:spring-boot-devtools')
+  runtimeOnly('org.postgresql:postgresql')
+  runtimeOnly('org.zenframework.z8.dependencies.commons:ojdbc6:2.0')
+  runtimeOnly('org.mariadb.jdbc:mariadb-java-client:1.7.4')
+
+  annotationProcessor("org.projectlombok:lombok:$lombokVersion")
+  compileOnly("org.projectlombok:lombok:$lombokVersion")
+  testAnnotationProcessor("org.projectlombok:lombok:$lombokVersion")
+  testCompileOnly("org.projectlombok:lombok:$lombokVersion")
+
+  providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
+  testImplementation('org.springframework.boot:spring-boot-starter-test')
+  providedRuntime('org.apache.tomcat.embed:tomcat-embed-jasper')
+
+  testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:1.3.2' // mybatis test lib
 }

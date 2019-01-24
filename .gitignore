@@ -5,6 +5,14 @@
 # Ignore Gradle build output directory
 build
 bin
+/resource/static/
+/resource/templates/
+
 facility-user/tmlog.lck
 facility-user/tmlog10.log
 facility-user/tmlog13.log
+facility-user/tmlog*
+
+gis-admin/tmlog*
+
+docky-user/tmlog*
