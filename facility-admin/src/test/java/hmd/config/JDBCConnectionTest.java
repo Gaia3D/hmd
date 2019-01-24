@@ -43,21 +43,4 @@ public class JDBCConnectionTest {
             e.printStackTrace();
         }
     }
-
-    @Test
-    public void mariaConnection() {
-        try {
-            Class.forName("org.mariadb.jdbc.Driver");
-            Connection conn = null;
-            conn = DriverManager.getConnection("jdbc:mariadb://localhost/facility", "test", "test");
-            PreparedStatement psmt = conn.prepareStatement("select COUNT(*) from facility");
-            ResultSet rs = null;
-            rs = psmt.executeQuery();
-            while (rs.next()) {
-                System.out.println("maria 성공 . value = " + rs.getString(1));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }

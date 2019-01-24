@@ -30,7 +30,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @Configuration
-@ComponentScan(	basePackages = {"hmd.service, hmd.persistence.oracle, hmd.persistence.postgresql, hmd.persistence.maria"},
+@ComponentScan(	basePackages = {"hmd.service, hmd.persistence.oracle, hmd.persistence.postgresql"},
                 includeFilters = {	@Filter(type = FilterType.ANNOTATION, value = Component.class),
                                     @Filter(type = FilterType.ANNOTATION, value = Service.class),
                                     @Filter(type = FilterType.ANNOTATION, value = Repository.class) },
