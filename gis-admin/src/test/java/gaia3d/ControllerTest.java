@@ -12,13 +12,13 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import hmd.controller.HelloController;
+import hmd.controller.MainController;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RunWith(SpringRunner.class)
-@WebMvcTest(HelloController.class)
-@ContextConfiguration(classes={HelloController.class})
+@WebMvcTest(MainController.class)
+@ContextConfiguration(classes={MainController.class})
 public class ControllerTest {
 
 	@Autowired
