@@ -14,20 +14,7 @@ public class MainController {
 	@GetMapping("gis")
 	public String Main() {
 		log.info("@@@@@ /gis");
-		return "layout/main";
+		return "gis";
 	}
-	
-	@GetMapping("test")
-	public String Test() {
-		log.info("@@@@@ /test");
-		return "test/comm_layout";
-	}
-	
-	@GetMapping("test2")
-	public String Test2() {
-		log.info("@@@@@ /test2");
-		return "test/contents";
-	}
-	
 	
 }
