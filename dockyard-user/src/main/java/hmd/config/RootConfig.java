@@ -1,27 +1,69 @@
 package hmd.config;
 
-import javax.sql.DataSource;
+import java.util.Properties;
 
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.mybatis.spring.SqlSessionFactoryBean;
-import org.mybatis.spring.annotation.MapperScan;
+import javax.transaction.SystemException;
+
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.context.annotation.DependsOn;
+import org.springframework.context.annotation.FilterType;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.jta.JtaTransactionManager;
 
-import lombok.extern.slf4j.Slf4j;
+import com.atomikos.icatch.config.UserTransactionServiceImp;
+import com.atomikos.icatch.jta.UserTransactionImp;
+import com.atomikos.icatch.jta.UserTransactionManager;
 
-@Slf4j
+/**
+ * root context 설정
+ * @author Cheon JeongDae
+ *
+ */
 @Configuration
-@MapperScan("hmd.persistence")
+@ComponentScan(	basePackages = {"hmd.service, hmd.persistence.oracle, hmd.persistence.postgresql, hmd.persistence.maria"},
+				includeFilters = {	@Filter(type = FilterType.ANNOTATION, value = Component.class),
+									@Filter(type = FilterType.ANNOTATION, value = Service.class),
+									@Filter(type = FilterType.ANNOTATION, value = Repository.class) },
+				excludeFilters = @Filter(type = FilterType.ANNOTATION, value = Controller.class) )
 public class RootConfig {
+
+	@Bean(name="userTransactionService", initMethod = "init", destroyMethod = "shutdownForce")
+    public UserTransactionServiceImp userTransactionService() {
+		Properties properties = new Properties();
+		properties.setProperty("com.atomikos.icatch.service",  "com.atomikos.icatch.standalone.UserTransactionServiceFactory");
+		UserTransactionServiceImp userTransactionServiceImp = new UserTransactionServiceImp(properties);
+		return userTransactionServiceImp;
+	}
+
+	@DependsOn("userTransactionService")
+	@Bean(initMethod = "init", destroyMethod = "close")
+	public UserTransactionManager atomikosTransactionManager() {
+		UserTransactionManager userTransactionManager = new UserTransactionManager();
+		userTransactionManager.setStartupTransactionService(false);
+		userTransactionManager.setForceShutdown(false);
+		return userTransactionManager;
+	}
+
+	@DependsOn("userTransactionService")
 	@Bean
-    public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception {
-		log.info(" ### RootConfig sqlSessionFactory ### ");
-		SqlSessionFactoryBean factory = new SqlSessionFactoryBean();
-		factory.setDataSource(dataSource);
-		factory.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:mybatis/*.xml"));
-		factory.setConfigLocation(new PathMatchingResourcePatternResolver().getResource("mybatis-config.xml"));
-		return factory.getObject();
-    }
+	public UserTransactionImp atomikosUserTransaction() throws SystemException {
+		UserTransactionImp userTransactionImp = new UserTransactionImp();
+		userTransactionImp.setTransactionTimeout(300);
+		return userTransactionImp;
+	}
+
+	@DependsOn("userTransactionService")
+	@Bean
+	public JtaTransactionManager jtaTransactionManager() throws SystemException {
+		JtaTransactionManager jtaTransactionManager = new JtaTransactionManager();
+		jtaTransactionManager.setTransactionManager(atomikosTransactionManager());
+		jtaTransactionManager.setUserTransaction(atomikosUserTransaction());
+		return jtaTransactionManager;
+	}
 }

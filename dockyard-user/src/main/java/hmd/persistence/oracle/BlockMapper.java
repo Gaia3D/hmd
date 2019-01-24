@@ -1,4 +1,4 @@
-package hmd.persistence;
+package hmd.persistence.oracle;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ public interface BlockMapper {
 
 	/** 블록 개수 조회  **/
 	int blockCount();
-	
+
 	/** 블록 리스트 조회  **/
 	List<BlockPoint> getBlockList();
 

@@ -1,5 +1,6 @@
 package hmd;
 
+
 import java.util.List;
 
 import org.junit.Test;
@@ -15,7 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(classes = DockyardUserApplication.class)
 public class OracleQueryExecuteTests {
 
 	@Autowired

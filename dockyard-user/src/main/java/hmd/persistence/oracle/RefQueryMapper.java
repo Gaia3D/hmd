@@ -1,4 +1,4 @@
-package hmd.persistence;
+package hmd.persistence.oracle;
 
 import java.util.List;
 

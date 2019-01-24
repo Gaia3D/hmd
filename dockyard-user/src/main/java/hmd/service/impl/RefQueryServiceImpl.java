@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import hmd.domain.Block;
-import hmd.persistence.RefQueryMapper;
+import hmd.persistence.oracle.RefQueryMapper;
 import hmd.service.RefQueryService;
 
 @Service

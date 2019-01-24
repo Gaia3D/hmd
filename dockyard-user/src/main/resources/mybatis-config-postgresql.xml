@@ -9,9 +9,8 @@
 		<setting name="mapUnderscoreToCamelCase" value="true"/>
 	</settings>
 
- 	<typeAliases>
- 		<typeAlias type="hmd.domain.Block" alias="block"/>
- 		<typeAlias type="hmd.domain.BlockPoint" alias="blockPoint"/>
+	<typeAliases>
+		<!-- <typeAlias type="hmd.domain.Facility" alias="facility"/> -->
 	</typeAliases>
 
 </configuration>
