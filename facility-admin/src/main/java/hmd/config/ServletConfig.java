@@ -46,7 +46,7 @@ public class ServletConfig implements WebMvcConfigurer {
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/").setViewName("forward:/index.jsp");
+        registry.addViewController("/").setViewName("forward:/index");
         registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
     }
 
@@ -70,6 +70,7 @@ public class ServletConfig implements WebMvcConfigurer {
         return new MessageSourceAccessor(m);
     }
 
+    //satic 리소스 처리
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
 //		log.info(" @@@ ServletConfig addResourceHandlers @@@");
@@ -78,6 +79,7 @@ public class ServletConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/images/**").addResourceLocations("/images/");
         registry.addResourceHandler("/js/**").addResourceLocations("/js/");
 
+        // rest api문서를 만들어주는 UI 도구?
         registry
         .addResourceHandler("swagger-ui.html")
         .addResourceLocations("classpath:/META-INF/resources/");

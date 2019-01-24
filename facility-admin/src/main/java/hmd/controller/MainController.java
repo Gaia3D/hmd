@@ -13,11 +13,6 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/")
 public class MainController {
 
-    /**
-    * 로그인
-    * @param model
-    * @return
-    */
     @RequestMapping(value = "index")
     public String index(HttpServletRequest request, Model model) {
 

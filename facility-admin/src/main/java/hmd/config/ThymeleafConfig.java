@@ -22,8 +22,8 @@ public class ThymeleafConfig {
     @Bean(name = "templateResolver")
     public ServletContextTemplateResolver templateResolver(ServletContext servletContext) {
         ServletContextTemplateResolver resolver = new ServletContextTemplateResolver(servletContext);
-        resolver.setPrefix("WEB-INF/templates/");
-        resolver.setSuffix(".html");
+        resolver.setPrefix("WEB-INF/templates/"); //webapp 디렉토리 내의 뷰페이지 위치
+        resolver.setSuffix(".html"); // 뷰페이지들에 포함되는 파일들의 확장자
         resolver.setTemplateMode("HTML5");
         resolver.setCharacterEncoding("UTF-8");
         resolver.setCacheable(false); //배포 할때는 true로 변경.
