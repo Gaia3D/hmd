@@ -50,6 +50,8 @@ dependencies {
 
 	implementation('org.springframework.boot:spring-boot-starter-jta-atomikos')
 	implementation('org.springframework.boot:spring-boot-starter-thymeleaf')
+	implementation('net.sourceforge.nekohtml:nekohtml:1.9.22')
+	implementation('nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:2.3.0')
 
 	runtimeOnly('org.springframework.boot:spring-boot-devtools')
 	runtimeOnly('org.postgresql:postgresql')
@@ -64,35 +66,4 @@ dependencies {
 	testImplementation('org.springframework.boot:spring-boot-starter-test')
 
 	providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
-}
-
-task cleanResource {
-    delete 'src/main/resources/templates', 'src/main/resources/static'
-}
-
-task resourceCopy {
-    doLast {
-        println "Copy resources..."
-        // copy template
-        copy {
-            from 'src/main/webapp/index.html'
-            into 'src/main/resources/templates'
-        }
-
-        // copy static
-        copy {
-            from('src/main/webapp') {
-                include "css/**","externlib/**", "images/**", "js/**"
-            }
-            into 'src/main/resources/static'
-        }
-    }
-}
-
-processResources {
-    dependsOn resourceCopy
-}
-
-clean {
-    dependsOn cleanResource
 }
