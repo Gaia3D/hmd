@@ -57,7 +57,7 @@ function loadBlock(dataCount) {
 				var splitData = rawData.split(";");
 				var boxArr = [];
 
-				for(var j=0, l=4; j<l; j++) {
+				for(var j=0, l=splitData.length; j<l; j++) {
 					var coord = splitData[j].split(",");
 					var lon = coord[0] // / 1000000;
 					var lat = coord[1] // / 1000000;
