@@ -51,16 +51,16 @@ function loadBlock(dataCount) {
 		dataType: 'json',
 		data: {mfgInd: '1', areagrp: 'A100', tranMfgInd: '5', plnwrkdte: '20181224'},
 		success: function(res) {
-			var len = dataCount;
+			var len = res.length;
 			for(var i=0; i<len; i++) {
 				var rawData = res[i].ctipointa;
 				var splitData = rawData.split(";");
 				var boxArr = [];
 
-				for(var j=0, l=4; j<l; j++) {
+				for(var j=0, l=splitData.length; j<l; j++) {
 					var coord = splitData[j].split(",");
-					var lon = coord[0] / 1000000;
-					var lat = coord[1] / 1000000;
+					var lon = coord[0] // / 1000000;
+					var lat = coord[1] // / 1000000;
 					var transCoord = ol.proj.transform([lon, lat], "EPSG:4326", map.getView().getProjection());
 					boxArr.push(transCoord);
 				}

@@ -5,10 +5,23 @@
 	- js 파일은 소문자로 시작한다.
 	- xml 파일은 ---로 시작한다.
 
-	▶ HTML 규칙
-	- id는 camelCase 방식으로 표기한다.
-	- class는 camelCase 방식으로 표기한다.
+	▶ HTML/js 규칙
 	- naming 첫 시작은 소문자로 시작한다. (숫자, 특수문자, 대문자 사용 지양)
+	- id/class/변수명/메소드명은 camelCase 방식으로 표기한다.
+	- 파일명은 하이픈(-)을 사용한다.
+
+	▶ 메소드 규칙
+	- list조회 --------> get대상By파라미터
+	- count ---------> get대상CountBy파라미퍼
+	- insert --------> insert대상
+	- update --------> update대상
+	- delete --------> delete대상
+
+	▶ 버튼명칭 정의
+	- 등록: 저장/초기화
+	- 수정: 저장/목록
+	- confirm: 취소/확인
+	- alert: 확인
 
 
 2. URL 정의
@@ -24,4 +37,3 @@
 
 	▶ facility-user
 	-
-
