@@ -51,7 +51,7 @@ function loadBlock(dataCount) {
 		dataType: 'json',
 		data: {mfgInd: '1', areagrp: 'A100', tranMfgInd: '5', plnwrkdte: '20181224'},
 		success: function(res) {
-			var len = dataCount;
+			var len = res.length;
 			for(var i=0; i<len; i++) {
 				var rawData = res[i].ctipointa;
 				var splitData = rawData.split(";");

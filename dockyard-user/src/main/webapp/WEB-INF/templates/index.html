@@ -83,6 +83,7 @@
 				</li>
 				<li class="on">
 					<button id="btnBlockAdd">add Block</button>
+					<button id="btnBlockClear">clear Block</button>
 				</li>
 			</ul>
 
@@ -145,7 +146,12 @@
 		});
 
 		$('#btnBlockAdd').click(function(){
-			loadBlock(10);
+			loadBlock();
+		});
+
+		$('#btnBlockClear').click(function(){
+			var layer = gis.getLayerById('block_layer');
+			layer.getSource().clear();
 		});
 	});
 </script>
