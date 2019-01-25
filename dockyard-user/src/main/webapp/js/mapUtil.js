@@ -59,8 +59,8 @@ function loadBlock(dataCount) {
 
 				for(var j=0, l=4; j<l; j++) {
 					var coord = splitData[j].split(",");
-					var lon = coord[0] / 1000000;
-					var lat = coord[1] / 1000000;
+					var lon = coord[0] // / 1000000;
+					var lat = coord[1] // / 1000000;
 					var transCoord = ol.proj.transform([lon, lat], "EPSG:4326", map.getView().getProjection());
 					boxArr.push(transCoord);
 				}
