@@ -21,3 +21,14 @@ null : 3381, 3: 2660
 
 3 Role
 4 메뉴
+
+
+
+
+
+* 시스템 정보관리와 그룹 관리 join
+select B.system_code, A.system_name, B.group_id, B.group_name 
+from tb_system A, tb_usergroup B
+where A.system_code = B.system_code
+order by B.system_code, B.group_id
+

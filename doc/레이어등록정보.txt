@@ -1,6 +1,6 @@
 ※ 지오서버 관리자 접속 정보
-	http://192.168.10.140:8080/geoserver/web/
-	admin / gai***
+	http://localhost:8080/geoserver/web/
+	test / ******
 
 
 0. 작업공간
