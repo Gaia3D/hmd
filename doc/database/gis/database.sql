@@ -1,0 +1,8 @@
+CREATE DATABASE giseee
+WITH OWNER = postgres
+	ENCODING = 'UTF8'
+	TEMPLATE = template0
+	TABLESPACE = pg_default
+	LC_COLLATE = 'C'
+	LC_CTYPE = 'C'
+	CONNECTION LIMIT = -1;
