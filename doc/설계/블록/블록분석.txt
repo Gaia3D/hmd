@@ -1,0 +1,70 @@
+
+쿼리명: select_02
+
+1. 두개의 블록 정보가 union all 되어있다.
+	- A union all B
+	- 첫번째(A)는 파악 중							- *_C20 테이블을 아예 안봄, 실제 존재하는 블록으로 예상
+	- 두번째(B)는 신청 블록 중에서 현 지번에 없는 블록이다. 	- *_C20 스케줄링 테이블을 참조한다.
+
+2. C20 테이블
+	- 블록이동 신청 테이블
+
+	- 지번 관련 컬럼
+		REQJBN: 신청이동위치 (FINISH_JIBUN)
+		ORIREQJBN: 신청시 요청한 이동위치
+		CURJBN: 현재위치 ----------------------------* 쿼리에서 사용
+		MOVJBN: 이동위치(하차) -----------------------* 쿼리에서 사용
+
+		---> DB값 확인 쿼리
+			SELECT orderid, SHIP_NO, sorn, su, reqjbn, orireqjbn, curjbn, movjbn, dongtran
+			FROM PM07_c20
+			WHERE TRANSTATUS = 'T';
+
+	- TRANSTATUS: 작업진행상태
+							REQJBN		ORIREQJBN	CURJBN		MOVJBN
+		A: 운반신청		-	값O			값O			값O			null
+		W: 검증완료(확정)	-	값O			값O			값O			null
+		S: 배차완료		-	-			-			-			-
+		M: 운반중			-	값O			값O			값O			null
+		T: 운반완료		-	값O			값O			값O			값O
+
+	- SORN: 호선/비호선
+		S: 호선
+		J: 정반
+		N: 비호선
+
+	- SU: 계획/긴급
+		S: 계획
+		U: 비계획(긴급)
+
+- PM07_D81, PM07_D82는 PK 없음. 조인 조건문으로 봤을때 SHIP_NO, BLOCK 일것으로 추측
+
+
+(3) 전체 지번 목록 조회
+	-- SRT1의 의미, 정렬순서, 예외가 아니면 1을 가짐
+	-- HAVING COUNT(B.JIBUN) > 2 -- 지번의 꼭지점 좌표의 개수(사각형이면 4)
+    SELECT A.JIBUN, A.MFG_IND, CASE WHEN A.MFG_IND = :MFG_IND THEN 1 ELSE 2 END SRT1
+    FROM PM07_A70 A
+    JOIN PM07_A75 B ON A.JIBUN = B.JIBUN AND A.MFG_IND = B.MFG_IND
+    JOIN PM07_E30 C ON A.JBNGRP = C.JBNGRP
+    JOIN PM07_E10 D ON C.AREAGRP = D.AREAGRP
+    WHERE A.YNUSE = 'Y'
+    AND (D.MFG_IND1 = '8' OR D.MFG_IND2 = '8')
+    AND (D.MFG_IND1 = A.MFG_IND OR D.MFG_IND2 = A.MFG_IND)
+    AND D.AREAGRP = 'A800'
+    GROUP BY A.JIBUN, A.MFG_IND
+    HAVING COUNT(B.JIBUN) > 2
+    ORDER BY SRT1, JIBUN;
+
+(4) ship_no와 block가 key 값
+	- 동일한 블록 명이 존재
+	- 키값에 따라 하나의 P값이 존재
+	267906	1B13	18/12/25				E33		845693	119	S	P	T
+	267906	1B13	18/12/25	18/12/25	Q01		845659	110	S	H	T
+	268006	1B13	18/12/24				E76		845414	119	S	P	T
+	268006	1B13	18/12/24	18/12/24	F12		845776	111	S	H	T
+	268006	1B13	18/12/24	18/12/24	Z001	845405	115	S	H	T
+	268106	1B13	18/12/25				909		845819	115	S	P	T
+	268106	1B13	18/12/24	18/12/25	920		845322	115	S	H	M
+	825406	1B13	18/12/19				4D22	844189	115	S	P	M
+	825506	1B13	18/12/18				4D43	843850	106	S	P	M
